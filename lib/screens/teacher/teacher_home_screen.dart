@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../login_screen.dart';
+import 'start_attendance_screen.dart';
 
 class TeacherHomeScreen extends StatelessWidget {
   const TeacherHomeScreen({super.key});
@@ -52,7 +53,14 @@ class TeacherHomeScreen extends StatelessWidget {
               width: double.infinity,
               height: 50,
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const StartAttendanceScreen(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.play_arrow),
                 label: const Text(
                   "Start Attendance",
