@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'attendance_session_screen.dart';
 
 class StartAttendanceScreen extends StatefulWidget {
   const StartAttendanceScreen({super.key});
@@ -140,24 +141,25 @@ class _StartAttendanceScreenState extends State<StartAttendanceScreen> {
                   if (courseController.text.isEmpty || sectionController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text(
-                          "Please fill in all fields",
-                        ),
+                        content: Text("Please fill in all fields"),
                       ),
                     );
                     return;
                   }
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        "Attendance Session Started",
-                      ),
+                  Navigator.push(
+                  context,
+                    MaterialPageRoute(
+                    builder: (context) => AttendanceSessionScreen(
+                      courseCode: courseController.text.trim(),
+                      section: sectionController.text.trim(),
+                      duration: selectedDuration,
                     ),
-                  );
+                  ),
+                 );
                 },
-                icon: const Icon(Icons.play_circle_fill),
-                label: const Text(
+                 icon: const Icon(Icons.play_circle_fill),
+                 label: const Text(
                   "Start Session",
                   style: TextStyle(
                     fontSize: 18,
