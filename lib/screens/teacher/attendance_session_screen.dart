@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'generate_qr_screen.dart';
 
-class AttendanceSessionScreen extends StatelessWidget {
+class AttendanceSessionScreen extends StatefulWidget {
   final String courseCode;
   final String section;
   final String duration;
@@ -13,12 +14,40 @@ class AttendanceSessionScreen extends StatelessWidget {
   });
 
   @override
+  State<AttendanceSessionScreen> createState() =>
+      _AttendanceSessionScreenState();
+}
+
+class _AttendanceSessionScreenState extends State<AttendanceSessionScreen> {
+  late final String sessionId;
+
+  @override
+  void initState() {
+    super.initState();
+    sessionId = generateSessionId();
+  }
+
+  String generateSessionId() {
+    final now = DateTime.now();
+
+    return "${widget.courseCode.replaceAll(' ', '')}-"
+        "${widget.section.toUpperCase()}-"
+        "${now.year}"
+        "${now.month.toString().padLeft(2, '0')}"
+        "${now.day.toString().padLeft(2, '0')}-"
+        "${now.hour.toString().padLeft(2, '0')}"
+        "${now.minute.toString().padLeft(2, '0')}"
+        "${now.second.toString().padLeft(2, '0')}";
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Attendance Session"),
         centerTitle: true,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -33,7 +62,7 @@ class AttendanceSessionScreen extends StatelessWidget {
                     ListTile(
                       leading: const Icon(Icons.menu_book),
                       title: const Text("Course"),
-                      subtitle: Text(courseCode),
+                      subtitle: Text(widget.courseCode),
                     ),
 
                     const Divider(),
@@ -41,7 +70,7 @@ class AttendanceSessionScreen extends StatelessWidget {
                     ListTile(
                       leading: const Icon(Icons.groups),
                       title: const Text("Section"),
-                      subtitle: Text(section),
+                      subtitle: Text(widget.section),
                     ),
 
                     const Divider(),
@@ -49,26 +78,23 @@ class AttendanceSessionScreen extends StatelessWidget {
                     ListTile(
                       leading: const Icon(Icons.timer),
                       title: const Text("Duration"),
-                      subtitle: Text(duration),
+                      subtitle: Text(widget.duration),
                     ),
 
                     const Divider(),
 
                     const ListTile(
-                      leading: Icon(
-                        Icons.circle,
-                        color: Colors.green,
-                      ),
+                      leading: Icon(Icons.circle, color: Colors.green),
                       title: Text("Status"),
                       subtitle: Text("Active"),
                     ),
 
                     const Divider(),
 
-                    const ListTile(
-                      leading: Icon(Icons.numbers),
-                      title: Text("Session ID"),
-                      subtitle: Text("TEMP-001"),
+                    ListTile(
+                      leading: const Icon(Icons.numbers),
+                      title: const Text("Session ID"),
+                      subtitle: Text(sessionId),
                     ),
                   ],
                 ),
@@ -81,7 +107,18 @@ class AttendanceSessionScreen extends StatelessWidget {
               width: double.infinity,
               height: 55,
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => GenerateQrScreen(
+                        sessionId: sessionId,
+                        courseCode: widget.courseCode,
+                        section: widget.section,
+                      ),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.qr_code),
                 label: const Text(
                   "Generate QR",
