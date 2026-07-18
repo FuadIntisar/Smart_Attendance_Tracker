@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../login_screen.dart';
+import 'give_attendance_screen.dart';
 
 class StudentHomeScreen extends StatelessWidget {
   const StudentHomeScreen({super.key});
@@ -52,7 +53,14 @@ class StudentHomeScreen extends StatelessWidget {
               width: double.infinity,
               height: 50,
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const GiveAttendanceScreen(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.qr_code_scanner),
                 label: const Text(
                   "Give Attendance",
@@ -84,10 +92,7 @@ class StudentHomeScreen extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: () {},
                 icon: const Icon(Icons.person_outline),
-                label: const Text(
-                  "Profile", 
-                style: TextStyle(fontSize: 18)
-                ),
+                label: const Text("Profile", style: TextStyle(fontSize: 18)),
               ),
             ),
           ],
