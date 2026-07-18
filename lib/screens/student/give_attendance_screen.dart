@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'scan_qr_screen.dart';
 
 class GiveAttendanceScreen extends StatelessWidget {
   const GiveAttendanceScreen({super.key});
@@ -6,10 +7,7 @@ class GiveAttendanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Give Attendance"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Give Attendance"), centerTitle: true),
 
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -19,14 +17,9 @@ class GiveAttendanceScreen extends StatelessWidget {
             Card(
               elevation: 3,
               child: const ListTile(
-                leading: Icon(
-                  Icons.info,
-                  color: Colors.blue,
-                ),
+                leading: Icon(Icons.info, color: Colors.blue),
                 title: Text("Attendance"),
-                subtitle: Text(
-                  "Scan the QR code shown by your teacher.",
-                ),
+                subtitle: Text("Scan the QR code shown by your teacher."),
               ),
             ),
 
@@ -36,7 +29,14 @@ class GiveAttendanceScreen extends StatelessWidget {
               width: double.infinity,
               height: 60,
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScanQrScreen(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.qr_code_scanner),
                 label: const Text(
                   "Scan QR Code",
